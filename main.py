@@ -60,12 +60,12 @@ class Trainer:
 
     def evaluate(self):
         self.net.eval()
-        for data, label in self.train_data:
+        for data, label in self.test_data:
             data, label = data.to(self.device), label.to(self.device)
             output = self.net(data)
 
             pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
-            acc = pred.eq(label).sum().item() / self.train_data.batch_size
+            acc = pred.eq(label.view_as(pred)).sum().item() / self.train_data.batch_size
             print(f"evaluate acc:{acc * 100}%")
 
 
