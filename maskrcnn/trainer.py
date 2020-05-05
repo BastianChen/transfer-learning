@@ -104,31 +104,5 @@ def main():
         image.save(r"images/{}-detect.jpg".format(count))
 
 
-main()
-
-# class Trainer:
-#     def __init__(self, save_path):
-#         self.device = "cuda" if torch.cuda.is_available() else "cpu"
-#         self.save_path = save_path
-#         self.net = net(2).to(self.device)
-#         self.train_data = DataLoader(Datasets('data'), batch_size=2, shuffle=True, drop_last=True)
-#         self.test_data = DataLoader(Datasets('data', isTrain=False), batch_size=1, shuffle=False)
-#         params = [p for p in self.net.parameters() if p.requires_grad]
-#         self.optimizer = torch.optim.Adam(params)
-#         self.lr_scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=3, gamma=0.1)
-
-#     def train(self):
-#         for i in range(10):
-#             for i, (image, target) in enumerate(self.train_data):
-#                 image = image.to(self.device)
-#                 boxes = target['boxes'].to(self.device)
-#                 labels = target['labels'].to(self.device)
-#                 masks = target['masks'].to(self.device)
-#                 print(boxes)
-#                 print(labels)
-#                 print(masks)
-
-
-# if __name__ == '__main__':
-#     trainer = Trainer("models/net.pth")
-#     trainer.train()
+if __name__ == '__main__':
+    main()

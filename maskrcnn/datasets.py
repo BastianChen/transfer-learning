@@ -20,13 +20,6 @@ class Datasets(Dataset):
         self.imgs = list(sorted(os.listdir(os.path.join(root, "PNGImages"))))
         self.masks = list(sorted(os.listdir(os.path.join(root, "PedMasks"))))
         self.transforms = transforms
-        # self.trans = get_transform(isTrain)
-        # if isTrain:
-        #     self.imgs = self.imgs[:136]
-        #     self.masks = self.masks[:136]
-        # else:
-        #     self.imgs = self.imgs[136:]
-        #     self.masks = self.masks[136:]
 
     def __len__(self):
         return len(self.imgs)
@@ -34,12 +27,8 @@ class Datasets(Dataset):
     def __getitem__(self, item):
         # load images ad masks
         img_path = os.path.join(self.root, "PNGImages", self.imgs[item])
-        # img_path = os.path.join(self.root, "PNGImages", "PennPed00044.png")
-        # print(img_path)
         mask_path = os.path.join(self.root, "PedMasks", self.masks[item])
         img = Image.open(img_path).convert("RGB")
-        # img = self.trans(img)
-        # img.show()
         # note that we haven't converted the mask to RGB,
         # because each color corresponds to a different instance with 0 being background
         mask = Image.open(mask_path)
@@ -99,51 +88,9 @@ def get_transform(train):
         trans.append(transforms.RandomHorizontalFlip(0.5))
 
     return transforms.Compose(trans)
-    # if train:
-    #     trans = transforms.Compose([
-    #         transforms.Resize((300, 400)),
-    #         transforms.ToTensor(),
-    #         # transforms.RandomHorizontalFlip(0.5)
-    #     ])
-    # else:
-    #     trans = transforms.ToTensor()
-    # return trans
 
 
 if __name__ == '__main__':
     data_train = Datasets('data', None)
     print(data_train[0])
     print(data_train[1])
-    # _, target_train = data_train[0]
-    # print(target_train['boxes'])
-    # _, target_train = data_train[1]
-    # print(target_train['boxes'])
-    # _, target_train = data_train[2]
-    # print(target_train['boxes'])
-    # data_test = Datasets('data', isTrain=False)
-    # _, target_test = data_test[0]
-    # print(target_test['boxes'])
-    # _, target_test = data_test[1]
-    # print(target_test['boxes'])
-    # _, target_test = data_test[2]
-    # print(target_test['boxes'])
-
-# from PIL import Image
-# import numpy as np
-#
-# image = Image.open('data/PNGImages/FudanPed00001.png')
-#
-# mask = Image.open('data/PedMasks/FudanPed00001_mask.png')
-# # a = np.stack(np.where(np.array(mask) == 1))
-# print(np.array(mask)[430])
-# # print(a)
-# print(np.where(np.array(mask) == 1))
-# mask.putpalette([
-#     0, 0, 0,  # black background
-#     255, 0, 0,  # index 1 is red
-#     255, 255, 0,  # index 2 is yellow
-#     255, 153, 0,  # index 3 is orange
-# ])
-# print(np.nonzero(np.array(mask)))
-# # image.show()
-# # mask.show()
